@@ -2,11 +2,11 @@
 
 ## Introduction
 
-When working with TypeScript, we often need to define the structure of our data. Type Alias and Interface are two important features that help us do this. At first, they may look very similar, but they have some differences. Understanding these differences makes writing TypeScript code easier and more organized.
+Type Alias and Interface are two important features of TypeScript. Both help developers define the structure of data and make code easier to understand. Although they look similar, they have some important differences. Understanding these differences helps us choose the right approach when writing TypeScript applications.
 
 ## What is Type Alias?
 
-A Type Alias allows us to create a custom name for a type. We can use it with primitive types, objects, unions, and more.
+A Type Alias creates a custom name for any type, including primitives, objects, unions, and tuples.
 
 ```ts
 type User = {
@@ -14,24 +14,15 @@ type User = {
   age: number;
 };
 
-const user: User = {
-  name: "Rahim",
-  age: 25
-};
-```
-
-Here, we created a type named `User`. Instead of writing the object structure again, we can simply use `User`.
-
-We can also use Type Alias with primitive types and union types.
-
-```ts
 type Status = "active" | "inactive";
 type UserId = number;
 ```
 
+Here, `User` represents an object structure, while `Status` represents a Union Type. This flexibility makes Type Alias useful in different situations.
+
 ## What is Interface?
 
-An Interface is mainly used to describe the structure of an object. It defines which properties an object should have and what their types should be.
+An Interface mainly describes the structure of an object. It defines which properties and methods an object should contain.
 
 ```ts
 interface Product {
@@ -39,30 +30,43 @@ interface Product {
   price: number;
 }
 
-const product: Product = {
-  name: "Laptop",
-  price: 50000
-};
-```
-
-Interfaces also support inheritance through the `extends` keyword.
-
-```ts
-interface Admin extends User {
-  role: string;
+interface DigitalProduct extends Product {
+  downloadUrl: string;
 }
 ```
 
-This allows `Admin` to reuse the properties of `User` and add new properties.
+Here, `DigitalProduct` inherits the properties of `Product` using the `extends` keyword.
 
 ## Main Differences
 
-The main difference is that Type Alias can represent many kinds of types, including unions and primitives. Interface is mainly designed for object structures.
+One major difference is that Type Alias supports primitive types, Union Types, and Intersection Types, while Interface is primarily designed for object structures.
 
-Another difference is that interfaces support declaration merging. This means we can declare the same interface more than once, and TypeScript combines their properties.
+Another important difference is Declaration Merging. TypeScript allows us to declare the same Interface multiple times and automatically combines their properties.
 
-Both Type Alias and Interface are useful, and both can describe object structures.
+```ts
+interface User {
+  name: string;
+}
+
+interface User {
+  email: string;
+}
+```
+
+Now, `User` contains both `name` and `email`. Type Alias does not support this feature.
+
+We can also combine object types using Intersection (`&`).
+
+```ts
+type Admin = User & {
+  role: string;
+};
+```
+
+## When Should We Choose One?
+
+I prefer Interface when defining object structures because it supports inheritance and Declaration Merging. I use Type Alias when working with unions, primitives, tuples, or complex type combinations. However, both can describe object structures, so the choice often depends on the project requirements and coding style.
 
 ## Conclusion
 
-In my experience, choosing between Type Alias and Interface depends on the situation. I prefer Interface when defining object structures and Type Alias when working with unions, primitives, or more complex type combinations. Understanding both helps me write cleaner and more maintainable TypeScript code.
+Type Alias and Interface are both useful in TypeScript. Learning their differences helps developers write cleaner, reusable, and maintainable code.
